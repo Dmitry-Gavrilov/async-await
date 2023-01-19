@@ -1,11 +1,20 @@
-/* eslint-disable no-console */
+/* eslint-disable max-classes-per-file */
 import GameSavingLoader from './GameSavingLoader';
 
-(async () => {
+class GameSaving {
+  constructor(data) {
+    this.id = data.id;
+    this.created = data.created;
+    this.userInfo = data.userInfo;
+  }
+}
+
+(async (data) => {
   try {
-    const saving = await GameSavingLoader.load();
-    console.log(saving);
-  } catch (e) {
-    console.log(e);
+    const loadGame = GameSavingLoader.load(data);
+    const saveGame = new GameSaving(await loadGame);
+    return saveGame;
+  } catch (error) {
+    throw new Error(error);
   }
 })();
